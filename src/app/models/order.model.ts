@@ -1,9 +1,10 @@
-import { Item } from "./item.model";
+import { OrderItem } from "./order-item.model";
 import { OrderError } from "./order-error.model";
+import { GroupedArray } from './GroupedArray';
 
 export interface Order {
     orderId: number;
-    orderItems: Item[];
+    orderItems: GroupedArray<OrderItem>[];
     table: string;
     orderCost: number;
     orderReceived: Date;

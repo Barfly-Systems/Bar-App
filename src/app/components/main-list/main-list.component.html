@@ -1,4 +1,4 @@
-<mat-table *ngIf="orderList.length > 0" [dataSource]="orderList" class="mat-elevation-z8">
+<mat-table *ngIf="orderList.length > 0" [dataSource]="orderList" multiTemplateDataRows class="mat-elevation-z8">
     <ng-container matColumnDef="ID">
         <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
         <mat-cell *matCellDef="let element"> {{element.orderId}} </mat-cell>
@@ -9,7 +9,7 @@
     </ng-container>
     <ng-container matColumnDef="Qty">
       <mat-header-cell *matHeaderCellDef>Qty</mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.orderItems.length}} </mat-cell>
+      <mat-cell *matCellDef="let element"> {{element.orderItems.length}} </mat-cell>  
     </ng-container>
     <ng-container matColumnDef="Total">
       <mat-header-cell *matHeaderCellDef>Total</mat-header-cell>
@@ -21,14 +21,17 @@
     </ng-container>
     <ng-container matColumnDef="Issue">
       <mat-header-cell *matHeaderCellDef>Issue</mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.orderErrors > 0 ? 'X' : ''}} </mat-cell>
+      <mat-cell *matCellDef="let element"> {{element.orderErrors > 0 ? 'X' : ''}} </mat-cell> 
     </ng-container>
     <ng-container matColumnDef="Status">
       <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
       <mat-cell *matCellDef="let element"> {{element.orderStatus}} </mat-cell>
     </ng-container>
-
-    <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: columnsToDisplay;"></mat-row>  
-</mat-table>
+  <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
+  
+  <mat-row *matRowDef="let element; columns: columnsToDisplay;" (click)="displayOrder(element)"></mat-row>
+</mat-table>  
 <h2 class="text-center no-orders-message" *ngIf="orderList.length === 0">No Orders</h2>
+<ul>
+  <li *ngFor="let msg of msgs">{{msg.summary}}</li>
+</ul>

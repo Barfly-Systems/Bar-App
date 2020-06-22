@@ -1,2 +1,2 @@
 <app-header></app-header>
-<app-main-list [orderList]="orderList"></app-main-list>
+<app-main-list [orderList]="orderList" (completeOrderEvent)="completeOrder($event)"></app-main-list>

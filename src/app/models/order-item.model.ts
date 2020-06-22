@@ -1,10 +1,10 @@
-export class Item {
+export class OrderItem {
     itemId: number;
     itemName: string;
     itemSize: string;
     itemCost: number;
     itemModifier: string[];
-    itemExtras: Item[]
+    itemExtras: OrderItem[]
     itemIsExtra: boolean;
     itemLocation: number;
 
@@ -14,7 +14,7 @@ export class Item {
         itemSize: string,
         itemCost: number,
         itemModifier: string[],
-        itemExtras: Item[],
+        itemExtras: OrderItem[],
         itemIsExtra: boolean,
         itemLocation: number
     )

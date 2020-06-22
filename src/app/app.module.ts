@@ -14,7 +14,12 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTableModule } from '@angular/material/table';
 import { MatListModule } from '@angular/material/list';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+
 import { registerLocaleData } from '@angular/common';
+import { OrderModalComponent } from './components/order-modal/order-modal.component';
 
 
 registerLocaleData(localeEnGb);
@@ -23,7 +28,8 @@ registerLocaleData(localeEnGb);
   declarations: [
     AppComponent,
     HeaderComponent,
-    MainListComponent
+    MainListComponent,
+    OrderModalComponent
   ],
   imports: [
     BrowserModule,
@@ -32,7 +38,10 @@ registerLocaleData(localeEnGb);
     MatSliderModule,
     MatToolbarModule,
     MatListModule,
-    MatTableModule
+    MatTableModule,
+    MatDialogModule,
+    MatButtonModule,
+    MatIconModule
   ],
   providers: [{ provide: LOCALE_ID, useValue: "en-GB" }],
   bootstrap: [AppComponent]
