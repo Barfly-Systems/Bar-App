@@ -8,24 +8,29 @@ import { GroupedArray } from './../models/GroupedArray';
 
 import { ArrayHelpers } from './../helpers/array';
 
-import { generate } from 'rxjs';
+import { environment } from './../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
 
-  readonly _apiUrl = '';
+  readonly _apiUrl = environment.apiUrl + "/api";
 
-  constructor(private http: HttpClient, private arrayHelper: ArrayHelpers) { }
+  constructor(private http: HttpClient, private arrayHelper: ArrayHelpers) { 
+    console.log(this._apiUrl);
+  }
 
-  
+  getAllOrders = (organisationId: number, statusId: number) => this.http.get(`${this._apiUrl}/allOrganisationOrders/${organisationId}/${statusId}`); 
+
+  getOrderItems = (orderId: number, organisationId: number) => this.http.get(`${this._apiUrl}/getOrderItems/${orderId}/${organisationId}`);
+
   //THIS IS FOR DEV TESTING ONLY - DO NOT USE IN PRODUCTION
 
  generateMockData = (orderIterator: number) => {    const min = 0;
     let orderItems: OrderItem[] = this.generateItems();
     let groupedItems: GroupedArray<OrderItem>[] = this.arrayHelper.GroupArray<OrderItem>(orderItems, "itemId");
-    let newOrder: Order = { orderId: 1000000 + orderIterator, orderItems: groupedItems, table: Math.ceil(Math.random() * 100).toString(), orderCost: orderItems.reduce((a,b)=>{return a+b["itemCost"]},0), orderReceived: new Date(), orderDelivered: null, orderErrors: [], orderStatus: 1 };
+    let newOrder: Order = { id: 1000000 + orderIterator, items: groupedItems, tableNumber: Math.ceil(Math.random() * 100).toString(), cost: orderItems.reduce((a,b)=>{return a+b["itemCost"]},0), received: new Date(), delivered: null, orderErrors: [], orderStatus: 1 };
     return newOrder;
   }
 
@@ -46,7 +51,7 @@ export class ApiService {
   generateModelItems = (index: number) => {
     let products: OrderItem[] = [this.fosters, this.carling, this.coke, this.smirnoff, this.appleJuice, this.fosters, this.carling, this.coke, this.smirnoff, this.appleJuice, this.scratchings];
     let groupedItems: GroupedArray<OrderItem>[] = this.arrayHelper.GroupArray<OrderItem>(products, "itemId");
-    let newOrder: Order = { orderId: 1000000 + index, orderItems: groupedItems, table: Math.ceil(Math.random() * 100).toString(), orderCost: products.reduce((a,b)=>{return a+b["itemCost"]},0), orderReceived: new Date(), orderDelivered: null, orderErrors: [], orderStatus: 1 };
+    let newOrder: Order = { id: 1000000 + index, items: groupedItems, tableNumber: Math.ceil(Math.random() * 100).toString(), cost: products.reduce((a,b)=>{return a+b["itemCost"]},0), received: new Date(), delivered: null, orderErrors: [], orderStatus: 1 };
     // let grouped: any = this.arrayHelper.GroupArray<OrderItem>(newOrder.orderItems, "itemId");
     return newOrder;
   }

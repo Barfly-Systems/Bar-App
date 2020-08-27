@@ -3,12 +3,12 @@ import { OrderError } from "./order-error.model";
 import { GroupedArray } from './GroupedArray';
 
 export interface Order {
-    orderId: number;
-    orderItems: GroupedArray<OrderItem>[];
-    table: string;
-    orderCost: number;
-    orderReceived: Date;
-    orderDelivered: Date;
-    orderErrors: OrderError[];
-    orderStatus: number;
+    id: number;
+    items: GroupedArray<OrderItem>[];
+    tableNumber: string;
+    cost: number;
+    received: Date;
+    delivered: Date;
+    orderErrors?: OrderError[];
+    orderStatus?: number;
 }

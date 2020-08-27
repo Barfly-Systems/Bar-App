@@ -1,25 +1,25 @@
-<h2 mat-dialog-title>Order #{{data.orderId}}</h2>
+<h2 mat-dialog-title>Order #{{data.id}}</h2>
 <mat-dialog-content class="mat-typography">
-    <mat-table [dataSource]="data.orderItems" multiTemplateDataRows class="mat-elevation-z8">
+    <mat-table [dataSource]="data.items" multiTemplateDataRows class="mat-elevation-z8">
         <ng-container matColumnDef="ID">
             <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.GroupedObject.itemId}} </mat-cell>
+            <mat-cell *matCellDef="let element"> {{element.product_ID}} </mat-cell>
         </ng-container>
         <ng-container matColumnDef="Product">
           <mat-header-cell *matHeaderCellDef>Table</mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.GroupedObject.itemName}} </mat-cell>
+          <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
         </ng-container>
         <ng-container matColumnDef="Size">
           <mat-header-cell *matHeaderCellDef>Size</mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.GroupedObject.itemSize}} </mat-cell>  
+          <mat-cell *matCellDef="let element"> {{element.size}} </mat-cell>  
         </ng-container>
         <ng-container matColumnDef="Qty">
           <mat-header-cell *matHeaderCellDef>Qty</mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.Qty}} </mat-cell>  
+          <mat-cell *matCellDef="let element"> {{element.qty}} </mat-cell>  
         </ng-container>
         <ng-container matColumnDef="Cost">
           <mat-header-cell *matHeaderCellDef>Total</mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.GroupedObject.itemCost | currency: 'GBP'}} </mat-cell>
+          <mat-cell *matCellDef="let element"> {{element.price | currency: 'GBP'}} </mat-cell>
         </ng-container>
       <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
       

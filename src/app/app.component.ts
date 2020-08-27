@@ -11,6 +11,10 @@ import { AudioService } from "./services/audio.service";
 
 //Models
 import {  Order } from './models/order.model';
+import { StateService } from './services/state.service';
+import { OrderDetailed } from './models/order-detailed.model';
+
+import { environment } from './../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -19,27 +23,39 @@ import {  Order } from './models/order.model';
 })
 export class AppComponent implements OnInit{
   
-  readonly _apiUrl = "http://35.214.106.155:44201";
+  readonly _apiUrl = environment.apiUrl;
 
   private _hubConnection: HubConnection;
 
   orderList: Order[] = [];
 
-  constructor(private api: ApiService, private audio: AudioService, private ref: ChangeDetectorRef){}
+  constructor(private api: ApiService, private audio: AudioService, private ref: ChangeDetectorRef, private state: StateService){}
 
   ngOnInit(){
-    this._hubConnection = new HubConnectionBuilder().withUrl(`${this._apiUrl}/notify`).build();
+    this.state.state.organisationId = 1000012;
+    this._hubConnection = new HubConnectionBuilder().withUrl(`${this._apiUrl}/notify?organisationId=1000012`).build();
+    console.log(this._hubConnection);
     this._hubConnection
       .start()
       .then(() => console.log("connection started!"))
+      .then(() => this.getAllOrders())
       .catch(err => console.log('Error whilst establishing connection :('));
 
-    this._hubConnection.on('BroadcastMessage', (type: string, payload: string) => {
+    
+
+    this._hubConnection.on('BroadcastMessage', (type: string, payload: any) => {
+      this.state.setOrders(payload.order);
       console.log({severity: type, summary: payload})
       this.audio.playPing();
     })
+  }
 
-    this.generateOrders();
+  getAllOrders = () => {
+    this.api.getAllOrders(1000012, 1).subscribe((data: any[]) => {
+      this.state.setAllOrders(data);
+      // this.orderList = data;
+      console.log(this.orderList);
+    })
   }
 
   mockdataIterator: number = 0;
@@ -64,7 +80,7 @@ export class AppComponent implements OnInit{
   completeOrder = (completedOrder: Order) => {
     console.log("hello");
     console.log(completedOrder);
-    let completedOrderIndex = this.orderList.map((e) => { return e.orderId }).indexOf(completedOrder.orderId);
+    let completedOrderIndex = this.orderList.map((e) => { return e.id }).indexOf(completedOrder.id);
     this.orderList.splice(completedOrderIndex, 1);
     this.orderList = [...this.orderList];
   }

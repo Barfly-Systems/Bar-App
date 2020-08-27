@@ -16,9 +16,12 @@ export class OrderModalComponent implements OnInit {
 
   columnsToDisplay = ['ID', 'Product', 'Qty', 'Size', 'Cost']
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: Order) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public data: Order) {
+    console.log(data);
+   }
 
   ngOnInit(): void {
+    console.log(this.data);
   }
 
 
