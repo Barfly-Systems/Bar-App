@@ -14,6 +14,7 @@ export class AudioService implements OnInit {
 
   playPing = () => {
     let audio = new Audio('assets/sound/ping.mp3');
-    audio.play();
+    let p = audio.play().then(data => console.log(data));
+    console.log(p);
   }
 }

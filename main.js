@@ -11,7 +11,10 @@ createWindow = () => {
         webPreferences: {
             nodeIntegration: true
         },
-        fullscreen: true
+        fullscreen: true,
+        webPreferences: {
+            webSecurity: false
+        }
     });
 
     mainWindow.loadURL(

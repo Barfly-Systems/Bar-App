@@ -4,6 +4,9 @@
 /dist
 /tmp
 /out-tsc
+/bar-app-linux-armv7l
+/bar-app-win32-x64
+/CiboBar-win32-x64
 # Only exists if Bazel was run
 /bazel-out
 

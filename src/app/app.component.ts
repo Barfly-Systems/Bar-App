@@ -32,6 +32,7 @@ export class AppComponent implements OnInit{
   constructor(private api: ApiService, private audio: AudioService, private ref: ChangeDetectorRef, private state: StateService){}
 
   ngOnInit(){
+    this.audio.playPing();
     this.state.state.organisationId = 1000012;
     this._hubConnection = new HubConnectionBuilder().withUrl(`${this._apiUrl}/notify?organisationId=1000012`).build();
     console.log(this._hubConnection);
@@ -54,7 +55,9 @@ export class AppComponent implements OnInit{
     this.api.getAllOrders(1000012, 1).subscribe((data: any[]) => {
       this.state.setAllOrders(data);
       // this.orderList = data;
+      console.group("ORDER LIST");
       console.log(this.orderList);
+      console.groupEnd();
     })
   }
 
