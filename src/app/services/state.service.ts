@@ -29,7 +29,8 @@ export class StateService{
     }
 
     setAllOrders = (newOrders: OrderDetailed[]) => {
-        this.ordersChange.next([...this.state.orders, ...newOrders]);
+        this.ordersChange.next(newOrders);
+        console.log(this.state.orders);
     }
 
     get organisationId(): number{

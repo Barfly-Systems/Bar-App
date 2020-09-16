@@ -11,6 +11,7 @@ import { HubConnection, HubConnectionBuilder } from '@aspnet/signalr';
 import { type } from 'os';
 import { StateService } from 'src/app/services/state.service';
 import { ApiService } from 'src/app/services/api.service';
+import { OrderDetailed } from 'CiboBar-win32-x64/resources/app/src/app/models/order-detailed.model';
 
 @Component({
   selector: 'app-main-list',
@@ -68,7 +69,12 @@ export class MainListComponent implements OnInit, OnChanges {
       const printSubscribeDialog = dialogRef.componentInstance.printOrderEvent.subscribe((orderToPrint: Order) => {
         dialogRef.close();
         alert(`Printing order #${orderToPrint.id}`);
-        
+      })
+      const reloadDialog = dialogRef.componentInstance.reloadOrderListEvent.subscribe((data: boolean) => {
+        this.api.getAllOrders(1000012, null).subscribe((data: Order[]) => {
+          dialogRef.close();
+          this.state.setAllOrders(data);
+        })
       })
   
       dialogRef.afterClosed().subscribe(result => {

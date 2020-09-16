@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://barflysystems.com/cibo.api'
+  apiUrl: 'https://ciboapi.azurewebsites.net'
 };

@@ -9,6 +9,8 @@ import { GroupedArray } from './../models/GroupedArray';
 import { ArrayHelpers } from './../helpers/array';
 
 import { environment } from './../../environments/environment';
+import { OrderStatusUpdate } from '../models/order-status-update.model';
+import { GetOrderActions_Result } from '../models/get-order-actions-result.model';
 
 @Injectable({
   providedIn: 'root'
@@ -21,20 +23,22 @@ export class ApiService {
     console.log(this._apiUrl);
   }
 
-  getAllOrders = (organisationId: number, statusId: number) => this.http.get(`${this._apiUrl}/allOrganisationOrders/${organisationId}/${statusId}`); 
+  getAllOrders = (organisationId: number, statusId: number) => this.http.get(statusId == null ? `${this._apiUrl}/allOrganisationOrders/${organisationId}` : `${this._apiUrl}/allOrganisationOrders/${organisationId}/${statusId}`); 
 
   getOrderItems = (orderId: number, organisationId: number) => this.http.get(`${this._apiUrl}/getOrderItems/${orderId}/${organisationId}`);
 
-  
+  getOrderActions = () => this.http.get<GetOrderActions_Result[]>(`${this._apiUrl}/getOrderActions/false/false`);
+
+  updateOrderStatus = (orderStatusUpdate: OrderStatusUpdate) => this.http.put(`${this._apiUrl}/updateOrderStatus`, orderStatusUpdate);
 
   //THIS IS FOR DEV TESTING ONLY - DO NOT USE IN PRODUCTION
 
- generateMockData = (orderIterator: number) => {    const min = 0;
-    let orderItems: OrderItem[] = this.generateItems();
-    let groupedItems: GroupedArray<OrderItem>[] = this.arrayHelper.GroupArray<OrderItem>(orderItems, "itemId");
-    let newOrder: Order = { id: 1000000 + orderIterator, items: groupedItems, tableNumber: Math.ceil(Math.random() * 100).toString(), cost: orderItems.reduce((a,b)=>{return a+b["itemCost"]},0), received: new Date(), delivered: null, orderErrors: [], orderStatus: 1 };
-    return newOrder;
-  }
+//  generateMockData = (orderIterator: number) => {    const min = 0;
+//     let orderItems: OrderItem[] = this.generateItems();
+//     let groupedItems: GroupedArray<OrderItem>[] = this.arrayHelper.GroupArray<OrderItem>(orderItems, "itemId");
+//     let newOrder: Order = { id: 1000000 + orderIterator, items: groupedItems, tableNumber: Math.ceil(Math.random() * 100).toString(), cost: orderItems.reduce((a,b)=>{return a+b["itemCost"]},0), received: new Date(), delivered: null, orderErrors: [], orderStatus: 1 };
+//     return newOrder;
+//   }
 
   generateItems = (): OrderItem[] => {
     let products: OrderItem[] = [this.fosters, this.carling, this.coke, this.smirnoff, this.appleJuice, this.scratchings];
@@ -50,13 +54,13 @@ export class ApiService {
     return order;
   }
 
-  generateModelItems = (index: number) => {
-    let products: OrderItem[] = [this.fosters, this.carling, this.coke, this.smirnoff, this.appleJuice, this.fosters, this.carling, this.coke, this.smirnoff, this.appleJuice, this.scratchings];
-    let groupedItems: GroupedArray<OrderItem>[] = this.arrayHelper.GroupArray<OrderItem>(products, "itemId");
-    let newOrder: Order = { id: 1000000 + index, items: groupedItems, tableNumber: Math.ceil(Math.random() * 100).toString(), cost: products.reduce((a,b)=>{return a+b["itemCost"]},0), received: new Date(), delivered: null, orderErrors: [], orderStatus: 1 };
-    // let grouped: any = this.arrayHelper.GroupArray<OrderItem>(newOrder.orderItems, "itemId");
-    return newOrder;
-  }
+  // generateModelItems = (index: number) => {
+  //   let products: OrderItem[] = [this.fosters, this.carling, this.coke, this.smirnoff, this.appleJuice, this.fosters, this.carling, this.coke, this.smirnoff, this.appleJuice, this.scratchings];
+  //   let groupedItems: GroupedArray<OrderItem>[] = this.arrayHelper.GroupArray<OrderItem>(products, "itemId");
+  //   let newOrder: Order = { id: 1000000 + index, items: groupedItems, tableNumber: Math.ceil(Math.random() * 100).toString(), cost: products.reduce((a,b)=>{return a+b["itemCost"]},0), received: new Date(), delivered: null, orderErrors: [], orderStatus: 1 };
+  //   // let grouped: any = this.arrayHelper.GroupArray<OrderItem>(newOrder.orderItems, "itemId");
+  //   return newOrder;
+  // }
 
 
   fosters: OrderItem = new OrderItem(10000001, "Fosters", "Pint", 3.25, [],[], false, 1);

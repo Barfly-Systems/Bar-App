@@ -15,6 +15,7 @@ import { StateService } from './services/state.service';
 import { OrderDetailed } from './models/order-detailed.model';
 
 import { environment } from './../environments/environment';
+import { AppConfig } from './services/app-config.service';
 
 @Component({
   selector: 'app-root',
@@ -22,7 +23,9 @@ import { environment } from './../environments/environment';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit{
-  
+  protected organisationId: number = AppConfig.settings.terminalConfig.organisationId;
+
+
   readonly _apiUrl = environment.apiUrl;
 
   private _hubConnection: HubConnection;
@@ -32,6 +35,7 @@ export class AppComponent implements OnInit{
   constructor(private api: ApiService, private audio: AudioService, private ref: ChangeDetectorRef, private state: StateService){}
 
   ngOnInit(){
+    console.log(this.organisationId);
     this.audio.playPing();
     this.state.state.organisationId = 1000012;
     this._hubConnection = new HubConnectionBuilder().withUrl(`${this._apiUrl}/notify?organisationId=1000012`).build();
@@ -52,7 +56,7 @@ export class AppComponent implements OnInit{
   }
 
   getAllOrders = () => {
-    this.api.getAllOrders(1000012, 1).subscribe((data: any[]) => {
+    this.api.getAllOrders(1000012, null).subscribe((data: Order[]) => {
       this.state.setAllOrders(data);
       // this.orderList = data;
       console.group("ORDER LIST");
@@ -74,10 +78,10 @@ export class AppComponent implements OnInit{
     //   this.mockdataIterator++;
     //   // console.log(this.orderList);
     // }, 1000 * rand);
-    for(let i = 0; i < 3; i++){
-      this.orderList.push(this.api.generateModelItems(i));
-      this.orderList = [...this.orderList];  
-    }
+    // for(let i = 0; i < 3; i++){
+    //   this.orderList.push(this.api.generateModelItems(i));
+    //   this.orderList = [...this.orderList];  
+    // }
   }
 
   completeOrder = (completedOrder: Order) => {

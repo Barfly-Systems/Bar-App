@@ -1,37 +1,124 @@
+@import "./vars.scss";
+@import "~@angular/material/theming";
 
-// Custom Theming for Angular Material
-// For more information: https://material.angular.io/guide/theming
-@import '~@angular/material/theming';
-@import '~@angular/material/prebuilt-themes/indigo-pink.css';
-// Plus imports for other components in your app.
-
-// Include the common styles for Angular Material. We include this here so that you only
-// have to load a single css file for Angular Material in your app.
-// Be sure that you only ever include this mixin once!
-@include mat-core();
-
-// Define the palettes for your theme using the Material Design palettes available in palette.scss
-// (imported above). For each palette, you can optionally specify a default, lighter, and darker
-// hue. Available color palettes: https://material.io/design/color/
-$Bar-App-primary: mat-palette($mat-indigo);
-$Bar-App-accent: mat-palette($mat-pink, A200, A100, A400);
-
-// The warn palette is optional (defaults to red).
-$Bar-App-warn: mat-palette($mat-red);
-
-// Create the theme object (a Sass map containing all of the palettes).
-$Bar-App-theme: mat-light-theme($Bar-App-primary, $Bar-App-accent, $Bar-App-warn);
-
-// Include theme styles for core and each component used in your app.
-// Alternatively, you can import and @include the theme mixins for each component
-// that you are using.
-@include angular-material-theme($Bar-App-theme);
-
-/* You can add global styles to this file, and also import other style files */
-
-html, body { height: 100%; }
+html, body, .h-100 { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+/*SPACING*/
+.pt-2{
+    padding-top: $paddingUnit * 2.5 !important;
+}
+.pb-2{
+    padding-bottom: $paddingUnit * 2.5 !important;
+}
+.px-1{
+    padding-left: $paddingUnit !important;
+    padding-right: $paddingUnit !important;
+}
+
+.px-2{
+    padding-left: $paddingUnit * 3 !important;
+    padding-right: $paddingUnit * 3 !important;
+}
+.my-1{
+    margin-top: $paddingUnit !important;
+    margin-bottom: $paddingUnit !important;
+    //adam
+}
+.my-2{
+    margin-top: $paddingUnit * 2 !important;
+    margin-bottom: $paddingUnit * 2 !important;
+}
+.mr-2{
+    margin-right: $paddingUnit * 3 !important;
+}
+.mb-1{
+    margin-bottom: $paddingUnit !important;
+}
+.mb-2{
+    margin-bottom: $paddingUnit * 2.5 !important;
+}
+.mt-2{
+    margin-top: $paddingUnit * 2.5 !important;
+}
+/*END OF SPACING*/
+
+/*DISPLAY*/
+.d-block{
+    display: block;
+}
+.d-inline-block{
+    display: inline-block;
+}
+.p-fixed{
+    position: fixed;
+}
+.p-sticky{
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+.tx-5{
+    transform: translateX(5vw);
+}
+/*END OF DISPLAY*/
+
+/*ALIGN*/
+
+/*TEXT*/
+.bold{
+    font-weight: 550 !important;
+}
+.center{
+    text-align: center;
+}
+.text-primary{
+}
+.name-large{
+    font-size: 1rem;
+    font-weight: 450 !important;
+    padding-top: 2px;
+    padding-bottom: $paddingUnit;
+}
+.capitalize{
+    text-transform: capitalize;
+}
+/*END OF TEXT*/
+
+/*BUTTONS*/
+.bottom-button-container{
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    padding: 10px;
+}
+.button-right{
+    text-align: right;
+}
+/*END OF BUTTONS*/
+
+/*COLORS*/
+.transparent-bg{
+    background-color: transparent;
+}
+.st-white-bg{
+    background-color: rgba(255,255,255,0.6);
+}
+.accent-color{
+    color: $brandColAccent;
+}
+/*END OF COLORS*/
+
+.categoryList{
+    padding: 10px 10px 30px 10px;
+}
 
 .text-center{
     text-align: center;
+}
+
+.mt-2{
+    margin-top: 30px;
 }

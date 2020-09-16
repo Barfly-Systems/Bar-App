@@ -11,4 +11,5 @@ export interface Order {
     delivered: Date;
     orderErrors?: OrderError[];
     orderStatus?: number;
+    orderStatusDescription: string;
 }

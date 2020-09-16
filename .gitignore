@@ -4,9 +4,9 @@
 /dist
 /tmp
 /out-tsc
-/bar-app-linux-armv7l
-/bar-app-win32-x64
-/CiboBar-win32-x64
+/bar-app-linux-armv7l/*
+/bar-app-win32-x64/*
+/CiboBar-win32-x64/*
 # Only exists if Bazel was run
 /bazel-out
 
@@ -30,7 +30,6 @@ speed-measure-plugin*.json
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
-!.vscode/launch.json
 !.vscode/extensions.json
 .history/*
 
@@ -43,6 +42,7 @@ npm-debug.log
 yarn-error.log
 testem.log
 /typings
+
 
 # System Files
 .DS_Store

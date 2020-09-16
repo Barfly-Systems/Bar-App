@@ -1,5 +1,7 @@
+@import "./../../../vars.scss";
+
 .no-orders-message{
-  color: #ff4081;
+  color: $brandColMain;
   font-size: 3rem;
 }
 
