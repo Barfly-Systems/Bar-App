@@ -16,6 +16,7 @@ import { OrderDetailed } from './models/order-detailed.model';
 
 import { environment } from './../environments/environment';
 import { AppConfig } from './services/app-config.service';
+import { OrderStatusUpdate } from './models/order-status-update.model';
 
 @Component({
   selector: 'app-root',
@@ -37,8 +38,8 @@ export class AppComponent implements OnInit{
   ngOnInit(){
     console.log(this.organisationId);
     this.audio.playPing();
-    this.state.state.organisationId = 1000012;
-    this._hubConnection = new HubConnectionBuilder().withUrl(`${this._apiUrl}/notify?organisationId=1000012`).build();
+    this.state.state.organisationId = AppConfig.settings.terminalConfig.organisationId;
+    this._hubConnection = new HubConnectionBuilder().withUrl(`${this._apiUrl}/notify?organisationId=${this.state.state.organisationId}`).build();
     console.log(this._hubConnection);
     this._hubConnection
       .start()
@@ -56,7 +57,7 @@ export class AppComponent implements OnInit{
   }
 
   getAllOrders = () => {
-    this.api.getAllOrders(1000012, null).subscribe((data: Order[]) => {
+    this.api.getAllOrders(this.state.state.organisationId, null).subscribe((data: Order[]) => {
       this.state.setAllOrders(data);
       // this.orderList = data;
       console.group("ORDER LIST");
@@ -85,11 +86,15 @@ export class AppComponent implements OnInit{
   }
 
   completeOrder = (completedOrder: Order) => {
-    console.log("hello");
-    console.log(completedOrder);
-    let completedOrderIndex = this.orderList.map((e) => { return e.id }).indexOf(completedOrder.id);
-    this.orderList.splice(completedOrderIndex, 1);
-    this.orderList = [...this.orderList];
+    let orderStatusUpdate: OrderStatusUpdate = {
+      organisationId: this.state.state.organisationId,
+      orderId: completedOrder.id,
+      statusId: 6
+    };
+    this.api.updateOrderStatus(orderStatusUpdate).subscribe(data => {
+      this.getAllOrders();
+    })
+    // this.orderList = [...this.orderList];
   }
 
 }

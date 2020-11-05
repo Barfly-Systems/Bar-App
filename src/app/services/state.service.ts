@@ -33,6 +33,12 @@ export class StateService{
         console.log(this.state.orders);
     }
 
+    completeOrder = (completedOrder: Order) => {
+        let completedOrderIndex = this.state.orders.map((e) => { return e.id }).indexOf(completedOrder.id);
+        this.state.orders.splice(completedOrderIndex, 1);
+        this.state.orders = [...this.state.orders];
+    }
+
     get organisationId(): number{
         return this.state.organisationId;
     }

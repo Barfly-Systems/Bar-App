@@ -3,9 +3,9 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Order } from './../../models/order.model';
 import { GroupedArray } from './../../models/GroupedArray';
 import { OrderModalStates } from './../../models/order-modal-states.enum';
-import { OrderItem } from 'CiboBar-win32-x64/resources/app/src/app/models/order-item.model';
-import { StateService } from 'CiboBar-win32-x64/resources/app/src/app/services/state.service';
+import { OrderItem } from './../../models/order-item.model';
 import { ApiService } from './../../services/api.service';
+import { StateService } from './../../services/state.service';
 
 @Component({
   selector: 'app-order-modal',

@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ApiService } from './../../services/api.service';
 import { OrderStatusUpdate } from './../../models/order-status-update.model';
 import { GetOrderActions_Result } from './../../models/get-order-actions-result.model';
+import { StateService } from 'src/app/services/state.service';
 
 
 @Component({
@@ -15,7 +16,7 @@ export class ActionSelectComponent implements OnInit {
   @Output() statusUpdateAction: EventEmitter<boolean> = new EventEmitter<boolean>();
   orderActions: GetOrderActions_Result[] = [];
 
-  constructor(private api: ApiService) { }
+  constructor(private api: ApiService, private store: StateService) { }
 
   ngOnInit(): void {
     console.log(this.orderId);
@@ -26,7 +27,7 @@ export class ActionSelectComponent implements OnInit {
 
   changeOrderStatus = (orderStatusId: number) => {
     let orderStatusUpdate: OrderStatusUpdate = {
-      organisationId: 1000012,
+      organisationId: this.store.state.organisationId,
       orderId: this.orderId,
       statusId: orderStatusId
     }
